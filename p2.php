@@ -26,24 +26,46 @@
             </div>
         </div>
     </nav>
+        <div class="container mt-5 ">
+            <h1 class="text-center">Contact Us</h1>
+            <div class="row justify-content-center">
+            <div class="col-md-4 col-lg-6">
+             <form method="POST" action="confirm.php">
+                <div class="mb-3" >
+                    <label for="name" class="form-label">Nama</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Hobi kamu:</label><br>
+                    <input type="checkbox" id="ngoding" name="hobbies[]" value="ngoding">
+                    <label for="nyanyi">ngoding</label><br>
+                    <input type="checkbox" id="mam" name="hobbies[]" value="mam">
+                    <label for="baca">mam</label><br>
+                    <input type="checkbox" id="turu" name="hobbies[]" value="turu">
+                    <label for="lari">turu</label>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Jenis Kelamin:</label><br>
+                    <input type="radio" id="laki" name="gender" value="Laki-laki" required>
+                    <label for="laki">Laki-laki</label><br>
+                    <input type="radio" id="perempuan" name="gender" value="Perempuan" required>
+                    <label for="perempuan">Perempuan</label>
+                </div>
+                <div class="mb-3">
+                    <label for="tanggal" class="form-label">Tanggal Lahir</label>
+                    <input type="date" class="form-control" id="tanggal" name="tanggal_lahir" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+</div>
+            </form>
 
-    <div class="container mt-5">
-        <h1>Contact Us</h1>
-        <form method="POST" action="confirm.php">
-            <div class="mb-3">
-                <label for="name" class="form-label">Namaa</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-            </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Emaill</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-            </div>
-            <div class="mb-3">
-                <label for="message" class="form-label">Pesan kamuu</label>
-                <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -1,3 +1,57 @@
+<?php
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+$servername = "localhost"; 
+$username = "root";        
+$password = "";           
+$dbname = "kontak";   
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
+}
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // print_r($_POST);
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $hobbies = isset($_POST['hobbies']) ? $_POST['hobbies'] : []; 
+    $gender = $_POST['gender'];
+    $tanggal_lahir = $_POST['tanggal_lahir'];
+
+   
+    if (!empty($tanggal_lahir)) {
+        $birthdate = new DateTime($tanggal_lahir);
+        $today = new DateTime();
+        $age = $today->diff($birthdate)->y;
+    } else {
+        $age = 'Tanggal lahir tidak valid';
+    }
+
+    if (count($hobbies) > 1) {
+        $last_hobby = array_pop($hobbies); // Ambil hobi terakhir
+        $hobbies_string = implode(", ", $hobbies) . " dan " . $last_hobby;
+    } elseif (count($hobbies) == 1) {
+        $hobbies_string = $hobbies[0]; // Jika hanya ada satu hobi
+    } else {
+        $hobbies_string = 'Tidak ada hobi yang dipilih'; // Jika tidak ada hobi yang dipilih
+    }
+
+
+        $sql = "INSERT INTO biodata (name, email, hobbies, gender, birthdate, age)
+        VALUES ('$name', '$email', '$hobbies_string', '$gender', '$tanggal_lahir', $age)";
+
+        if ($conn->query($sql) === TRUE) {
+        echo "Data berhasil disimpan ke database!";
+        } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,12 +83,18 @@
 
     <div class="container mt-5">
         <h1>Terimakasih telah isi formnyaa</h1>
-        <p>Ini informasi yang kami simpan</p>
-        <p>Namaa: <?php echo htmlspecialchars($_POST['name']); ?></p>
-        <p>Emaill: <?php echo htmlspecialchars($_POST['email']); ?></p>
-        <p>Pesannn kamuu : <?php echo htmlspecialchars($_POST['message']); ?></p>
+        <?php    
+        echo "<p>Nama: $name</p>";
+        echo "<p>Email: $email</p>";
+        echo "<p>Hobi: $hobbies_string</p>";
+        echo "<p>Jenis Kelamin: $gender</p>";
+        echo "<p>Umur: $age tahun</p>"; // Display age instead of birthdate
+        $conn->close();
+        ?>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  
 </body>
 </html>
